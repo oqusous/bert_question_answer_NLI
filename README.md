@@ -97,9 +97,9 @@ Labels for \[passages]\[0 to 808731]\[passages]\[is_selected] are 0 for bad answ
 |0    |7,536,988 |
 |1    |532,761 |
 
-The data was sampled down to 60,000 samples with 1:1 ratio of label 0 and 1 due to computational limitation and to resolved the data imbalance issue. The folder data_qna in this repo contains a csv file with the choosen sample. The dataset's first 5 rows is given below:
+The data was sampled down to 60,000 samples with 1:1 ratio of label 0 and 1 due to computational limitation and to resolved the data imbalance issue. The folder data_qna in this repo contains a csv file with the chosen sample. The dataset's first 5 rows is given below:
 
-## Question and Answer Word Frequence Plots
+## Question and Answer Word Frequency Plots
 
 Out of interest I wanted to view the top 150 words the occur in the questions and answers.
 
@@ -118,8 +118,8 @@ The data is first tokenized to word ids using sentencepiece tokenizer. The prepr
 
 The output of the packer contains three inputs:
 
-* input_mask The mask allows the model to cleanly differentiate between the content and the padding. The mask has the same shape as the input_word_ids, and contains a 1 anywhere the input_word_ids is not padding.
-* input_type_ids has the same shape of input_mask, but inside the non-padded region, contains a 0 or a 1 indicating which sentence the token is a part of.
+* input_mask: the mask allows the model to cleanly differentiate between the content and the padding. The mask has the same shape as the input_word_ids, and contains a 1 anywhere the input_word_ids is not padding.
+* input_type_ids: it has the same shape of input_mask, but inside the non-padded region, contains a 0 or a 1 indicating which sentence the token is a part of.
 * input_word_ids is the tokens with fixed sequence length, padding and the special 101 and 102 in the middle and end of the array tokens that indicate the start of the first sentence (question), start of the second sentence (answer) and start of the sequence padding. An example of what this may look like for one question-answer input pair is shown in the array below:
 ```
 array([  101,  2054,  2003,  4786,  3255,  1999,  2026,  2398,   102,
@@ -152,6 +152,6 @@ The BERT encoder layer is preceded by the input layer which receives the data pr
 |recall_score| 0.74 |
 |precision_score| 0.66 |
 
-A plot of Pureline activation output for 'good answer' vs 'bad answer' for each for each datapoint that was successfuly and unsuccessfuly classified by the model.
+A plot of Pureline activation output for 'good answer' vs 'bad answer' for each for each datapoint that was successfully and unsuccessfully classified by the model.
 
 ![Probability Scatter Plots](/plots/scatter_kde_hist_plot_v0.png)
