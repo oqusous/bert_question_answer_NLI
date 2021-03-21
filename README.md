@@ -1,4 +1,4 @@
-# bert_question_answer_NLI
+# BERT_question_answer_NLI
 
 # Objective
 Use Google's BERT to classify question-answer dataset passage pairs by recognizing the answers with high lexical overlap. In other words, determine whether the context sentence contains the answer to the question.
@@ -108,7 +108,40 @@ Out of interest I wanted to view the top 150 words the occur in the questions an
 ![Questions word frequency](/plots/freqDist_gw_questions_v0.png)
 
 # BERT Model Architecture
+The base BERT pre-processing and encoder pre-trained models were used for this task.
 
+'bert_en_uncased_L-12_H-768_A-12': 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/3'
+
+The data is first tokenized to word ids using sentencepiece tokenizer. The preprocessing model then uses the ".bert_pack_inputs(tensors, seq_length)", which takes the list of tokens and a sequence length argument (128 - 256 is reasonable to use for the computing power provided by Google Colab). This packs the inputs to create a dictionary of tensors in the format expected by the BERT model.
+
+![tokenizer](/plots/tok.PNG)
+
+The output of the packer contains three inputs:
+
+* input_mask The mask allows the model to cleanly differentiate between the content and the padding. The mask has the same shape as the input_word_ids, and contains a 1 anywhere the input_word_ids is not padding.
+* input_type_ids has the same shape of input_mask, but inside the non-padded region, contains a 0 or a 1 indicating which sentence the token is a part of.
+* input_word_ids is the tokens with fixed sequence length, padding and the special 101 and 102 in the middle and end of the array tokens that indicate the start of the first sentence (question), start of the second sentence (answer) and start of the sequence padding. An example of what this may look like for one question-answer input pair is shown in the array below:
+```
+array([  101,  2054,  2003,  4786,  3255,  1999,  2026,  2398,   102,
+       29267,  2389,  5234,  8715,  1012, 29267,  2389,  5234,  8715,
+        2003,  1037,  9145,  4650,  3303,  2011,  1037, 18521,  9113,
+        1999,  1996,  7223,  2008,  5260,  2000, 23229,  3255,  1010,
+       11251,  1010,  2030, 15903,  2791,  1999,  1996,  5340,  2217,
+        1997,  1996,  2192,  1010,  7223,  2030,  3093,  1012,  3949,
+        2950,  3424,  1011, 20187,  4200,  1010, 11867,  4115,  3436,
+        1996,  7223,  1010,  2030,  2522, 28228, 13186,  3334,  9314,
+       13341,  2015,  1012,   102,     0,     0,     0,     0,     0,
+           0,     0,     0,     0,     0,     0,     0,     0,     0,
+           0,     0,     0,     0,     0,     0,     0,     0,     0,
+           0,     0,     0,     0,     0,     0,     0,     0,     0,
+           0,     0,     0,     0,     0,     0,     0,     0,     0,
+           0,     0,     0,     0,     0,     0,     0,     0,     0,
+           0,     0], dtype=int32)
+```
+
+The BERT encoder layer is preceded by the input layer which receives the data pre-processed in the previous step. It is then followed by a dropout layer to control overfitting and final Dense classifier layer with Pureline activation function.
+
+![Model](/plots/model.PNG)
 
 
 # Results
@@ -119,6 +152,6 @@ Out of interest I wanted to view the top 150 words the occur in the questions an
 |recall_score| 0.74 |
 |precision_score| 0.66 |
 
-A plot of probability of 'good answer' vs 'bad answer' for each for each datapoint that was successfuly and unsuccessfuly classified by the model.
+A plot of Pureline activation output for 'good answer' vs 'bad answer' for each for each datapoint that was successfuly and unsuccessfuly classified by the model.
 
-![Questions word frequency](/plots/scatter_kde_hist_plot_v0.png)
+![Probability Scatter Plots](/plots/scatter_kde_hist_plot_v0.png)
