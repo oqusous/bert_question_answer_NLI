@@ -20,3 +20,10 @@ The data was sampled down to 60,000 samples due to computation limitations. The 
 !gzip -d eval_v2.1_public.json.gz
 ```
 
+# Results
+|Metric | 60,000 Stratified Sample|
+|-------|------------|
+|Accuracy_score| 0.75 |
+|f1_score| 0.70 |
+|recall_score| 0.74 |
+|precision_score| 0.66 |
