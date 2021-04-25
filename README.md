@@ -99,6 +99,14 @@ Labels for \[passages]\[0 to 808731]\[passages]\[is_selected] are 0 for bad answ
 
 The data was sampled down to 60,000 samples with 1:1 ratio of label 0 and 1 due to computational limitation and to resolved the data imbalance issue. The folder data_qna in this repo contains a csv file with the chosen sample. The dataset's first 5 rows is given below:
 
+|query_id |	question |	sentence |	label |
+|---------|----------|----------|-------|
+|1036482 |	who is neyo ex wife?? |	But since she is now starring on “Atlanta Exes... |	0 |	
+|119953 |	define de son tort	De Son Tort Law and Legal Definition. |	De Son T... |	1 |	
+|1007602 |	which continent is covered in ice |	About 98% of Antarctica is covered by the Anta... |	1 |	
+|17089 |	amount limits in rtgs and neft |	RTGS transactions involve large amounts of cas... |	1 |	
+|569541 |	what are the elements of effective revision |	Organization is the progression, relatedness, ... |	0 |	
+
 ## Question and Answer Word Frequency Plots
 
 Out of interest I wanted to view the top 150 words the occur in the questions and answers.
