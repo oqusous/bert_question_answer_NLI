@@ -91,13 +91,14 @@ dict_keys(['answers', 'passages', 'query', 'query_id', 'query_type', 'wellFormed
 ```
 
 
-Labels for \[passages]\[0 to 808731]\[passages]\[is_selected] are 0 for bad answers and 1 for good answers. The data is imbalanced with following count or each class:
+For the question-answering natural language inferencing task, the passages’ “is_selected” and “passage_text”, query and query_id parameters were to be kept for use in the training algorithm and subsequent testing of the model. Each entry has on average 10 passages as potential answers. When the data was re-structured into a tabular form that is more pandas/csv friendly, the query and query_id were repeated for each passage text and label- the resulting data is 7,536,988 passages labelled ‘0’ (not selected) and 532,761 labelled ‘1’ (selected).
+
 |label| count
 |-----|--------|
 |0    |7,536,988 |
 |1    |532,761 |
 
-The data was sampled down to 60,000 samples with 1:1 ratio of label 0 and 1 due to computational limitation and to resolved the data imbalance issue. The folder data_qna in this repo contains a csv file with the chosen sample. The dataset's first 5 rows is given below:
+The dataset is huge and is highly unbalanced, due to time and computational limitations, the data had to be sampled down to a reasonable size. This is also created the opportunity of balancing the data through under-sampling. The data was sampled down to 30,000 unique queries, and for each query a passage labeled ‘0’ and a passage labeled ‘1’ were randomly selected, resulting in a balanced 60,000 datapoints.The folder data_qna_60k in this repo contains a csv file with the chosen sample. The dataset's first 5 rows is given below:
 
 |query_id |	question |	sentence |	label |
 |---------|----------|----------|-------|
